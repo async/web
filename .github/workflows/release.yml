@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
   workflow_dispatch:
     inputs:
       tag:
@@ -14,37 +14,13 @@ on:
 permissions:
   contents: write
   id-token: write
-  pull-requests: write
 
 jobs:
-  release-please:
-    name: Create release PR or GitHub Release
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-    steps:
-      - name: Run Release Please
-        id: release
-        uses: googleapis/release-please-action@8b8fd2cc23b2e18957157a9d923d75aa0c6f6ad5 # v4
-        with:
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
-
   publish-release:
     name: Publish package
-    needs:
-      - release-please
-    if: >-
-      always()
-      && (
-        (github.event_name == 'push' && needs.release-please.outputs.release_created == 'true')
-        || github.event_name == 'workflow_dispatch'
-      )
     runs-on: ubuntu-latest
     env:
-      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || needs.release-please.outputs.tag_name }}
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
     steps:
       - name: Checkout release tag
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5

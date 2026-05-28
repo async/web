@@ -4,9 +4,9 @@ MiniWeb publishes to npm as `@async/miniweb`.
 
 ## Normal Release Flow
 
-MiniWeb uses Release Please. Merge Conventional Commit changes into `main`; the release workflow opens or updates a release PR that bumps `package.json`, updates `package-lock.json`, and updates `CHANGELOG.md`.
+MiniWeb includes Release Please config for changelog and version PRs. Merge Conventional Commit changes into `main`; then create a release PR with Release Please once GitHub Actions PR creation is enabled for the `async-framework` organization or a dedicated release token is configured.
 
-When the release PR merges, the workflow creates the GitHub Release, verifies the package, publishes to npm, and attaches the exact packed tarball to the GitHub Release.
+When the release PR merges, push the release tag. The `Release` workflow verifies the package, publishes to npm through Trusted Publishing, creates the GitHub Release if needed, and attaches the exact packed tarball to the GitHub Release.
 
 ## npm Trusted Publishing
 
@@ -19,22 +19,17 @@ Configure npm Trusted Publishing for this package before the first automated pub
 
 The workflow uses GitHub OIDC with `id-token: write`; it does not use an `NPM_TOKEN` secret.
 
+The repository workflow is tag-triggered because the `async-framework` organization currently blocks `GITHUB_TOKEN` from creating pull requests. To let Release Please open changelog PRs from Actions, an organization admin must allow GitHub Actions to create pull requests, or the workflow must be updated to use a dedicated release token.
+
 ## First Release
 
-The first package version is `0.1.0`. After the release automation is pushed and npm Trusted Publishing is configured, create and push the initial tag:
+The first package version is `0.1.0`. It was published manually from a verified tarball because npm Trusted Publishing can only be configured after the package exists. Future releases should use the tag-triggered workflow after Trusted Publishing is configured.
 
 ```sh
-git tag v0.1.0
-git push origin main v0.1.0
+npm run release:check
+git tag vX.Y.Z
+git push origin main vX.Y.Z
 ```
-
-Then run the `Release` workflow manually with:
-
-```txt
-tag: v0.1.0
-```
-
-The manual workflow path exists so the first release can publish the already prepared initial version. Future releases should use Release Please PRs.
 
 ## Local Verification
 
