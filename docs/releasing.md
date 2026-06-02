@@ -13,7 +13,7 @@ When the release PR merges, push the release tag. The `Release` workflow verifie
 Configure npm Trusted Publishing for this package before the first automated publish:
 
 - npm package: `@async/miniweb`
-- GitHub owner/repository: `async-framework/miniweb`
+- GitHub owner/repository: `async-framework/async-miniweb`
 - Workflow filename: `release.yml`
 - Environment: leave unset unless npm requires one for the package
 

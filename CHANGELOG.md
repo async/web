@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.1.0](https://github.com/async-framework/miniweb/releases/tag/v0.1.0) - 2026-05-28
+## [0.1.0](https://github.com/async-framework/async-miniweb/releases/tag/v0.1.0) - 2026-05-28
 
 Initial public release of MiniWeb as `@async/miniweb`.
 

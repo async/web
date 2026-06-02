@@ -17,7 +17,7 @@ It only redirects top-level page navigations for the MiniWeb preview hostname. I
 4. Select this folder:
 
 ```txt
-/Users/patrickjs/code/async-framework/miniweb/tools/brave-miniweb-redirect
+/Users/patrickjs/code/async-framework/async-miniweb/tools/brave-miniweb-redirect
 ```
 
 Then open:
