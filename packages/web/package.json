@@ -1,0 +1,117 @@
+{
+  "name": "@async/web",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Developer-facing Async app framework that lowers app conventions into WebRuntime configs.",
+  "license": "MIT",
+  "homepage": "https://github.com/async-framework/async-web/tree/main/packages/web#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/async-framework/async-web.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/async-framework/async-web/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./app": {
+      "types": "./dist/app.d.ts",
+      "default": "./dist/app.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./router": {
+      "types": "./dist/router/index.d.ts",
+      "default": "./dist/router/index.js"
+    },
+    "./routes": {
+      "types": "./dist/routes.d.ts",
+      "default": "./dist/routes.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "default": "./dist/runtime/index.js"
+    },
+    "./runtime/app": {
+      "types": "./dist/runtime/app.d.ts",
+      "default": "./dist/runtime/app.js"
+    },
+    "./runtime/async-db": {
+      "types": "./dist/runtime/async-db/index.d.ts",
+      "default": "./dist/runtime/async-db/index.js"
+    },
+    "./runtime/browser": {
+      "types": "./dist/runtime/browser/index.d.ts",
+      "default": "./dist/runtime/browser/index.js"
+    },
+    "./runtime/cache": {
+      "types": "./dist/runtime/cache/index.d.ts",
+      "default": "./dist/runtime/cache/index.js"
+    },
+    "./runtime/edge": {
+      "types": "./dist/runtime/edge/index.d.ts",
+      "default": "./dist/runtime/edge/index.js"
+    },
+    "./runtime/node": {
+      "types": "./dist/runtime/node/index.d.ts",
+      "default": "./dist/runtime/node/index.js"
+    },
+    "./runtime/platform": {
+      "types": "./dist/runtime/platform/index.d.ts",
+      "default": "./dist/runtime/platform/index.js"
+    },
+    "./runtime/providers": {
+      "types": "./dist/runtime/providers/index.d.ts",
+      "default": "./dist/runtime/providers/index.js"
+    },
+    "./runtime/routes": {
+      "types": "./dist/runtime/routes.d.ts",
+      "default": "./dist/runtime/routes.js"
+    },
+    "./runtime/testing": {
+      "types": "./dist/runtime/testing/index.d.ts",
+      "default": "./dist/runtime/testing/index.js"
+    },
+    "./runtime/tracing": {
+      "types": "./dist/runtime/tracing/index.d.ts",
+      "default": "./dist/runtime/tracing/index.js"
+    },
+    "./runtime/vite": {
+      "types": "./dist/runtime/vite/index.d.ts",
+      "default": "./dist/runtime/vite/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "tsc --noEmit",
+    "pack:check": "npm pack --dry-run",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vitest": "4.1.6"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,31 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "strict": true,
-    "esModuleInterop": false,
-    "ignoreDeprecations": "6.0",
-    "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
-    "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
-    "verbatimModuleSyntax": true,
-    "allowImportingTsExtensions": true,
-    "rewriteRelativeImportExtensions": true,
-    "types": [
-      "vitest/globals"
-    ]
-  },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-    "vite.config.ts",
-    "vitest.config.ts"
-  ]
+  "extends": "./tsconfig.base.json",
+  "files": []
 }

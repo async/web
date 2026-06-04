@@ -1,87 +1,117 @@
 # Getting Started
 
-MiniWeb turns browser-safe `FetchApp` objects into a local web runtime. Requests enter a route graph and return standard `Response` objects.
-
-## Install
-
-```sh
-npm install @async/miniweb
-```
-
-Inside this repo, use the local scripts:
-
-```sh
-npm install
-npm run dev
-```
-
-## Create A Small App
+Start with `@async/web` when you are building an application and want defaults. Use explicit `apps` and `routes` when the app is multiple systems wired together.
 
 ```ts
-import { createMiniWeb, createMiniWebApp, mount, toApp } from '@async/miniweb';
+import {
+  browserApp,
+  defineApp,
+  fetchApp,
+  mount,
+  toApp
+} from '@async/web';
 
-const frontend = {
-  fetch() {
-    return new Response('<h1>Home</h1>', {
-      headers: {
-        'content-type': 'text/html; charset=utf-8'
-      }
-    });
-  }
-};
-
-const backend = {
-  fetch(request) {
-    return Response.json({
-      pathname: new URL(request.url).pathname
-    });
-  }
-};
-
-const miniweb = createMiniWebApp({
-  origin: 'https://miniweb.local',
+export default defineApp({
+  origin: 'https://crm.acme.async.run',
+  dev: {
+    port: 4101,
+    strictPort: false
+  },
   apps: {
-    frontend: {
-      app: frontend,
-      basePath: '/'
-    },
-    backend: {
-      app: backend,
-      basePath: '/api/'
-    }
+    web: browserApp({
+      document: './apps/web/index.html',
+      basePath: '/',
+      fallback: 'spa'
+    }),
+    api: fetchApp({
+      runtime: 'origin',
+      basePath: '/api/',
+      region: 'us-east',
+      fetch: apiFetch
+    })
   },
   routes: [
-    mount('/api', toApp('backend')),
-    toApp('frontend')
+    mount('/api', toApp('api')),
+    toApp('web')
+  ]
+});
+```
+
+`@async/web` lowers app-level topology into a WebRuntime config. It also keeps convention shortcuts for projects that prefer defaults:
+
+- `browserApp({ document: './index.html' })` creates a static browser `FetchApp`; `fallback: 'spa'` returns the document for browser navigation paths.
+- `fetchApp({ runtime, fetch })` keeps explicit Fetch handlers for Hono, Remix-style handlers, raw Fetch apps, or custom static serving.
+- `asyncDbApp({ config: dbConfig })` mounts the AsyncDB adapter placeholder when the app wants explicit DB placement in `apps`.
+- `db: dbConfig` mounts the AsyncDB adapter placeholder when `@async/db` is installed by the app.
+- `api: { dir: './src/api' }` records the API directory for the future CLI/build pipeline.
+- `routes: { dir: './src/routes' }` records file-route conventions while explicit route arrays remain available.
+
+The defaults are intentionally visible in code as `asyncWebDefaultConfig`. `defineApp()` uses that object as the internal baseline, then layers user-defined apps, routes, and shortcuts over it.
+
+Configs compose recursively, so monorepos and many-repo systems can expose root wiring without pointing routes at ports:
+
+```ts
+import crm from '../crm/async.config';
+import admin from '../admin/async.config';
+import {
+  defineApp,
+  mount,
+  resolveDevPorts,
+  toApp
+} from '@async/web';
+
+const app = defineApp({
+  name: 'root',
+  apps: {
+    crm,
+    admin
+  },
+  routes: [
+    mount('/crm', toApp('crm')),
+    mount('/admin', toApp('admin'))
   ]
 });
 
-const web = await createMiniWeb(miniweb);
-const response = await web.fetch('/api/hello');
-console.log(await response.json());
+const devPorts = resolveDevPorts(app, {
+  occupiedPorts: [
+    4101
+  ]
+});
 ```
 
-## Use Platform Fetch
+`dev.port` is a preferred port. When `strictPort` is false, the dev system can scan upward if the preferred port is taken. Routes stay logical: `toApp('crm')` resolves to the actual started or discovered endpoint.
 
-`platform.fetch()` resolves relative URLs from the current app or environment location and enters the MiniWeb route graph.
+Use `@async/web/runtime` directly for the explicit graph:
 
 ```ts
-const backend = {
-  async fetch(_request, _env, context) {
-    const inner = await context.platform.fetch('inner');
-    return Response.json({
-      inner: await inner.json()
-    });
-  }
-};
+import {
+  createWebRuntime,
+  defineRuntime,
+  mount,
+  toApp
+} from '@async/web/runtime';
+
+const config = defineRuntime({
+  origin: 'https://crm.local',
+  apps: {
+    web: {
+      basePath: '/',
+      fetch: webFetch
+    },
+    api: {
+      runtime: 'origin',
+      basePath: '/api/',
+      fetch: apiFetch
+    }
+  },
+  routes: [
+    mount('/api', toApp('api')),
+    toApp('web')
+  ]
+});
+
+const runtime = await createWebRuntime(config);
+const response = await runtime.fetch('/api/health');
 ```
 
-This is the static-hosted demo path: frontend code and browser-safe backend code can live in one bundle while still communicating through `fetch`.
-
-## Run Tests
-
-```sh
-npm run typecheck
-npm test
-npm run build
-```
+Use the migration guide when moving existing projects to the new package split.

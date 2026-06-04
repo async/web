@@ -1,75 +1,19 @@
 {
-  "name": "@async/miniweb",
+  "name": "async-web",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
-  "description": "A tiny web-stack simulator for static-hosted demos and Node-side integration tests.",
+  "description": "Async web framework and request/runtime/provider graph packages.",
   "license": "MIT",
-  "homepage": "https://github.com/async-framework/async-miniweb#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/async-framework/async-miniweb.git"
-  },
-  "bugs": {
-    "url": "https://github.com/async-framework/async-miniweb/issues"
-  },
-  "bin": {
-    "miniweb": "./dist/cli.js"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./browser": {
-      "types": "./dist/browser/index.d.ts",
-      "default": "./dist/browser/index.js"
-    },
-    "./node": {
-      "types": "./dist/node/index.d.ts",
-      "default": "./dist/node/index.js"
-    },
-    "./edge": {
-      "types": "./dist/edge/index.d.ts",
-      "default": "./dist/edge/index.js"
-    },
-    "./testing": {
-      "types": "./dist/testing/index.d.ts",
-      "default": "./dist/testing/index.js"
-    },
-    "./platform": {
-      "types": "./dist/platform/index.d.ts",
-      "default": "./dist/platform/index.js"
-    },
-    "./vite": {
-      "types": "./dist/vite/index.d.ts",
-      "default": "./dist/vite/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "docs/*.md",
-    "CHANGELOG.md",
-    "README.md",
-    "LICENSE"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "packageManager": "pnpm@10.20.0",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build && tsc -p tsconfig.build.json",
-    "release:check": "npm run typecheck && npm test && npm run build && npm pack --dry-run",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "build": "pnpm --dir packages/router build && pnpm --dir packages/webruntime build && pnpm --dir packages/web build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "release:check": "pnpm typecheck && pnpm test && pnpm build && pnpm --dir packages/web run pack:check"
   },
   "engines": {
     "node": ">=20"
-  },
-  "devDependencies": {
-    "happy-dom": "20.9.0",
-    "typescript": "6.0.3",
-    "vite": "8.0.13",
-    "vitest": "4.1.6"
   }
 }

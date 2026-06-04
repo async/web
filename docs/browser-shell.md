@@ -1,6 +1,6 @@
 # Browser Shell
 
-The browser shell is a local viewer for MiniWeb examples. It gives you:
+The browser shell is a local viewer for WebRuntime examples. It gives you:
 
 - a fake URL bar
 - back, forward, reload, run, and reset controls
@@ -13,7 +13,7 @@ The browser shell is a local viewer for MiniWeb examples. It gives you:
 ## Run Locally
 
 ```sh
-npm run dev
+pnpm --dir packages/webruntime dev
 ```
 
 Open `http://localhost:5173/`.
@@ -43,7 +43,7 @@ help
 clear
 ```
 
-`npm run dev` marks the runtime as running and prints a local URL. It does not execute arbitrary npm packages.
+`npm run dev` marks the fake terminal runtime as running and prints a local URL. It does not execute arbitrary npm packages.
 
 ## Phone Review Through Tailscale Serve
 
@@ -58,7 +58,7 @@ Tailscale Serve HTTPS URL
 After changing browser shell code, rebuild:
 
 ```sh
-npm run build
+pnpm --dir packages/webruntime build
 ```
 
-Then refresh the Tailscale HTTPS URL. The root page should show `MiniWeb Examples`.
+Then refresh the Tailscale HTTPS URL. The root page should show the runtime example directory.

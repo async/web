@@ -1,45 +1,51 @@
-# Releasing MiniWeb
+# Releasing Async Web
 
-MiniWeb publishes to npm as `@async/miniweb`.
+This workspace publishes one npm package:
+
+- `@async/web`
+
+`@async/web/runtime` and `@async/web/router` are public subpath exports from `@async/web`. The runtime and router workspace packages are private implementation packages until we decide to publish them separately.
 
 ## Normal Release Flow
 
-MiniWeb includes Release Please config for changelog and version PRs. Merge Conventional Commit changes into `main`; then create a release PR with Release Please once GitHub Actions PR creation is enabled for the `async-framework` organization or a dedicated release token is configured.
+Use the workspace release gate before tagging:
 
-When the release PR merges, push the release tag. The `Release` workflow verifies the package, publishes to npm through Trusted Publishing, creates the GitHub Release if needed, and attaches the exact packed tarball to the GitHub Release.
+```sh
+pnpm release:check
+```
+
+This runs package typechecks, tests, builds, and `npm pack --dry-run` for the publishable package through the workspace `pack:check` scripts.
+
+When a release tag is pushed, the `Release` workflow installs with pnpm, verifies the workspace, packs `@async/web`, publishes it to npm, creates the GitHub Release if needed, and uploads the tarball.
 
 ## npm Trusted Publishing
 
-Configure npm Trusted Publishing for this package before the first automated publish:
+Configure npm Trusted Publishing for the package:
 
-- npm package: `@async/miniweb`
-- GitHub owner/repository: `async-framework/async-miniweb`
+- npm package: `@async/web`
+- GitHub owner/repository: `async-framework/async-web`
 - Workflow filename: `release.yml`
 - Environment: leave unset unless npm requires one for the package
 
 The workflow uses GitHub OIDC with `id-token: write`; it does not use an `NPM_TOKEN` secret.
-
-The repository workflow is tag-triggered because the `async-framework` organization currently blocks `GITHUB_TOKEN` from creating pull requests. To let Release Please open changelog PRs from Actions, an organization admin must allow GitHub Actions to create pull requests, or the workflow must be updated to use a dedicated release token.
-
-## First Release
-
-The first package version is `0.1.0`. It was published manually from a verified tarball because npm Trusted Publishing can only be configured after the package exists. Future releases should use the tag-triggered workflow after Trusted Publishing is configured.
-
-```sh
-npm run release:check
-git tag vX.Y.Z
-git push origin main vX.Y.Z
-```
 
 ## Local Verification
 
 Run this before tagging or merging a release PR:
 
 ```sh
-npm run release:check
+pnpm release:check
 ```
 
-This runs typecheck, tests, build, and `npm pack --dry-run`.
+For package-local verification:
+
+```sh
+pnpm --filter @async/web typecheck
+```
+
+## Migration Note
+
+The package split replaces the earlier single-package release. Existing consumers should follow the migration guide and move to `@async/web` or its `@async/web/runtime` subpath by responsibility.
 
 ## Local AI Changelog Polish
 

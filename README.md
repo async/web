@@ -1,154 +1,144 @@
-# MiniWeb
+# Async Web
 
-MiniWeb is a tiny local web runtime for static-hosted demos and fast Node-side integration tests.
+Async Web is the workspace for the Async web ecosystem.
 
-Package: `@async/miniweb`
+- `@async/web` is the developer-facing app framework. Start here when you are building an app with app conventions, AsyncDB shortcuts, deployment defaults, and a simple path to production.
+- `@async/web/router` is the pure structured routing package. Use it for richer inspectable route specs, route composition, validation, and route table printing.
+- `@async/web/runtime` is the lower-level Request -> Response runtime. Drop down here when you need explicit routing, runtime placement, cache behavior, platform simulation, provider hooks, or compile-away infrastructure control.
 
-MiniWeb lets browser-safe frontend code and browser-safe `app.fetch()` server code talk to each other through a real `Request -> Response` route graph. It is built for GitHub Pages-style demos, fake browsers, fake service workers, edge-style middleware, cache behavior, streaming responses, and tests that should not need a real browser or a real server.
+The original runtime direction is preserved: apps, routes, scoped platform APIs, cache stores, middleware, virtual browser behavior, and Vite compile-away behavior all remain centered on `platform.fetch()` entering a controlled Request -> Response route graph.
+
+## Public Imports
+
+| Import | Role |
+| --- | --- |
+| `@async/web` | Friendly app authoring API that lowers conventions into WebRuntime config. |
+| `@async/web/router` | Pure `type`-tagged route specs and composition helpers. |
+| `@async/web/runtime` | Runtime engine, route graph, platform APIs, cache policies, tracing, provider extension points, and Vite compile-away plugin. |
+| `@async/db` | Data contracts, resources, schemas, operations, generated types, and store contracts. |
 
 ## Quick Start
 
 ```ts
-import { createMiniWeb, createMiniWebApp, mount, toApp } from '@async/miniweb';
+import {
+  asyncDbApp,
+  browserApp,
+  defineApp,
+  fetchApp,
+  mount,
+  toApp,
+  tryApp
+} from '@async/web';
+import dbConfig from './db.config.mjs';
 
-const app = createMiniWebApp({
-  origin: 'https://miniweb.local',
+export default defineApp({
+  origin: 'https://crm.acme.async.run',
   apps: {
-    frontend: {
-      app: {
-        fetch() {
-          return new Response('<h1>Home</h1>', {
-            headers: {
-              'content-type': 'text/html; charset=utf-8'
-            }
-          });
-        }
-      },
-      basePath: '/'
+    web: browserApp({
+      document: './apps/web/index.html',
+      basePath: '/',
+      fallback: 'spa'
+    }),
+    bff: fetchApp({
+      runtime: 'edge',
+      placement: 'global',
+      fetch: edgeFetch
+    }),
+    api: fetchApp({
+      runtime: 'origin',
+      basePath: '/api/',
+      region: 'us-east',
+      fetch: apiFetch
+    }),
+    db: asyncDbApp({
+      config: dbConfig,
+      basePath: '/db/',
+      region: 'same-as-api',
+      viewerPath: '/__db/'
+    })
+  },
+  routes: [
+    mount('/db', toApp('db')),
+    mount('/api', tryApp({}, [
+      toApp('bff'),
+      toApp('api')
+    ])),
+    toApp('web')
+  ]
+});
+```
+
+`browserApp()` creates a static browser `FetchApp` from a document and assets. `fetchApp()` keeps raw Fetch handlers as the lower-level escape hatch, and `asyncDbApp()` mounts the WebRuntime adapter while `@async/db` remains the data contract owner. `@async/web` also keeps app-level shortcuts such as `api: { dir: './src/api' }` and `db: dbConfig` for convention-based projects. The explicit `apps` and `routes` form is the source of truth when you need to see how browser, edge, backend, database, or other systems are wired.
+
+For richer routing, import the advanced structured helpers from `@async/web/router`:
+
+```ts
+import {
+  host,
+  method,
+  splitTraffic
+} from '@async/web/router';
+```
+
+Distribution is not a route type. Apps and route steps describe logical topology; placement and region policy live on app/runtime config and can later compile to provider infrastructure.
+
+Use `@async/web/runtime` directly when you want the runtime graph:
+
+```ts
+import {
+  defineRuntime,
+  mount,
+  toApp
+} from '@async/web/runtime';
+
+export default defineRuntime({
+  origin: 'https://crm.acme.async.run',
+  apps: {
+    web: {
+      runtime: 'browser',
+      basePath: '/',
+      fetch: webFetch
     },
-    backend: {
-      app: {
-        fetch(request) {
-          return Response.json({
-            pathname: new URL(request.url).pathname
-          });
-        }
-      },
-      basePath: '/api/'
+    api: {
+      runtime: 'origin',
+      basePath: '/api/',
+      fetch: apiFetch
+    },
+    db: {
+      runtime: 'async-db',
+      basePath: '/db/',
+      fetch: asyncDbFetch
     }
   },
   routes: [
-    mount('/api', toApp('backend')),
-    toApp('frontend')
+    mount('/db', toApp('db')),
+    mount('/api', toApp('api')),
+    toApp('web')
   ]
 });
-
-const web = await createMiniWeb(app);
-const response = await web.fetch('/api/about');
-const data = await response.json();
 ```
 
-## Run The Examples
+## Workspace
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm typecheck
+pnpm test
+pnpm build
 ```
-
-Open `http://localhost:5173/`. The root page is an example directory with ten setups that exercise the route graph, scoped platform APIs, cache stores, runtime modes, and streaming behavior.
-
-## What It Models
-
-- frontend/browser behavior
-- fake location, history, and navigation
-- scoped platform APIs such as `fetch`, storage, cookies, caches, timers, crypto, encoding, and messaging
-- service-worker-style and edge-style cache boundaries
-- route middleware and mounted apps
-- same-realm and iframe runtime modes
-- backend/origin `app.fetch(request)`
-- virtual filesystem and fake terminal
-- fake delay and streaming responses
-
-## Core Shape
-
-MiniWeb has three public concepts:
-
-- `apps`: browser-safe `FetchApp` objects that receive `Request`, `env`, and `context`.
-- `routes`: promise-based middleware that decides how requests connect to apps, cache stores, rewrites, redirects, or origins.
-- `platform`: scoped Web APIs for each app/runtime. `platform.fetch()` resolves relative URLs from that app's location and re-enters the route graph.
-
-Iframe isolation is opt-in. The default runtime is same-realm because that keeps static-hosted demos simple and fast.
-
-## Vite Compile-Away
-
-Apps can import Web APIs from MiniWeb during development and compile those imports back to native globals for production builds:
-
-```ts
-import { fetch, localStorage, Request, Response } from '@async/miniweb/platform';
-```
-
-```ts
-import { miniweb } from '@async/miniweb/vite';
-
-export default {
-  plugins: [
-    miniweb()
-  ]
-};
-```
-
-By default, `vite dev` resolves platform imports to MiniWeb scoped APIs, and `vite build` resolves them to native `globalThis` APIs. Use `miniweb({ target: 'miniweb' })` for static MiniWeb demos that should keep the route graph after build, or `miniweb({ target: 'native' })` to bypass MiniWeb in both dev and build.
-
-## Example Setups
-
-| Example | Shows |
-| --- | --- |
-| `hello-app` | the original manifest app as a MiniWeb setup |
-| `streaming-app` | visibly delayed long streamed HTML, text, and NDJSON responses |
-| `simple-fullstack` | frontend and backend apps with runtime overrides |
-| `service-worker-cache` | platform cache storage as a service-worker-style cache |
-| `cdn-edge-cache` | shared edge cache with tags and trace entries |
-| `edge-middleware` | redirect, rewrite, and HTML transform middleware |
-| `multi-app-network` | host-based routing across multiple registered apps |
-| `platform-fetch-chain` | backend code calling another backend route through `platform.fetch()` |
-| `request-body-lab` | request body preservation through the route graph |
-| `stateful-session-cache` | scoped cookies plus named Cache Storage |
-
-The streaming example accepts delay query params for manual testing:
-`/?demo=%2Fexamples%2Fstreaming-app%2F&delay=700&firstDelay=1200`.
 
 ## Docs
 
 - [Getting Started](docs/getting-started.md)
 - [Concepts](docs/concepts.md)
-- [Examples](docs/examples.md)
-- [Routes And Cache](docs/routes-and-cache.md)
-- [Platform And Runtimes](docs/platform-and-runtimes.md)
+- [Web vs WebRuntime](docs/web-vs-webruntime.md)
+- [Router](docs/router.md)
+- [Routes and Cache](docs/routes-and-cache.md)
+- [Platform and Runtimes](docs/platform-and-runtimes.md)
+- [AsyncDB Integration](docs/async-db-integration.md)
 - [Vite Compile-Away](docs/vite-compile-away.md)
-- [Releasing](docs/releasing.md)
-- [Browser Shell](docs/browser-shell.md)
-
-## File Map
-
-- `src/core/`: MiniWeb runtime, route middleware, platform APIs, tracing, delay, cache, streams, and virtual filesystem.
-- `src/browser/`: browser shell, preview frame rendering, and frame RPC helpers.
-- `src/node/`: Node-side helpers and happy-dom frontend driver.
-- `src/examples/`: reusable example setups.
-- `tests/`: unit, integration, browser-shell, platform, route, stream, and example coverage.
-- `docs/`: task-oriented docs for the public model.
-
-## Verification
-
-```sh
-npm run typecheck
-npm test
-npm run build
-```
+- [Migration Guide](docs/migration-from-miniweb.md)
 
 ## Non-Goals
 
-MiniWeb is not a full Node.js VM.
-
-MiniWeb does not run arbitrary npm packages.
-
-MiniWeb does not provide real secrets, real auth, real TCP sockets, `child_process`, or native modules.
+This pass does not implement a hosted PaaS, billing, real provider provisioning, or a full Imperva/Fly/Cloudflare deployment adapter. Provider packages are extension points until the deployment layer is ready.

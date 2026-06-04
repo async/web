@@ -1,23 +1,24 @@
-# MiniWeb Docs
+# Async Web Docs
 
-MiniWeb is a tiny local web runtime for static-hosted demos and fast Node-side integration tests.
+Async Web has three public import layers in one npm package:
 
-Use these pages by task:
+- `@async/web`: app framework defaults for app authors.
+- `@async/web/router`: structured route specs, composition, validation, and route table printing.
+- `@async/web/runtime`: explicit Request -> Response runtime graph for routing, cache placement, platform simulation, provider hooks, and compile-away behavior.
 
-- [Getting Started](getting-started.md): build the smallest full-stack MiniWeb setup and run the browser shell.
-- [Concepts](concepts.md): understand apps, routes, platform APIs, runtimes, and the request flow.
-- [Examples](examples.md): choose one of the ten example setups.
-- [Routes And Cache](routes-and-cache.md): connect apps with promise middleware and cache behavior.
-- [Platform And Runtimes](platform-and-runtimes.md): use scoped Web APIs and choose same-realm or iframe execution.
-- [Vite Compile-Away](vite-compile-away.md): import MiniWeb platform APIs in source and swap them by dev/build target.
-- [Releasing](releasing.md): publish `@async/miniweb` to npm and GitHub Releases.
-- [Browser Shell](browser-shell.md): run the root examples directory locally or through Tailscale Serve.
+## Guides
 
-The short path is:
+- [Getting Started](getting-started.md)
+- [Concepts](concepts.md)
+- [Web vs WebRuntime](web-vs-webruntime.md)
+- [Router](router.md)
+- [Routes and Cache](routes-and-cache.md)
+- [Platform and Runtimes](platform-and-runtimes.md)
+- [AsyncDB Integration](async-db-integration.md)
+- [Vite Compile-Away](vite-compile-away.md)
+- [Migration Guide](migration-from-miniweb.md)
 
-```sh
-npm install
-npm run dev
-```
+## Legacy Notes
 
-Then open `http://localhost:5173/`.
+- [Browser Shell](browser-shell.md)
+- [Releasing](releasing.md)

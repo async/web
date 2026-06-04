@@ -1,104 +1,50 @@
-# Routes And Cache
+# Routes and Cache
 
-MiniWeb routes are promise middleware. They are the main way to connect frontend apps, backend apps, cache behavior, rewrites, redirects, files, and real origins.
-
-## Basic Routing
+`@async/web/router` routes are structured config objects. They use `type`, not `kind`, and are safe to inspect, validate, print, or compile.
 
 ```ts
-import { createMiniWebApp, mount, toApp } from '@async/miniweb';
-
-export const app = createMiniWebApp({
-  origin: 'https://miniweb.local',
-  apps: {
-    frontend: {
-      app: frontendApp,
-      basePath: '/'
-    },
-    backend: {
-      app: backendApp,
-      basePath: '/api/'
-    }
-  },
-  routes: [
-    mount('/api', toApp('backend')),
-    toApp('frontend')
-  ]
-});
+import {
+  cacheFirst,
+  host,
+  method,
+  mount,
+  splitTraffic,
+  toApp,
+  toOrigin,
+  tryApp
+} from '@async/web/router';
 ```
 
-`mount('/api', toApp('backend'))` strips `/api` before the backend sees the request. A request to `/api/users` reaches the backend as `/users`.
+Common route helpers:
 
-## Host Routing
+- `mount(prefix, route)` strips a logical path prefix and delegates to child route specs.
+- `toApp(name)` dispatches to a registered app.
+- `toOrigin(baseUrl)` proxies to an upstream origin.
+- `toFiles()` serves virtual filesystem entries.
+- `redirect()` changes request flow.
+- `cacheFirst()`, `networkFirst()`, `staleWhileRevalidate()`, `cacheOnly()`, and `networkOnly()` model cache policy.
+- `tryApp(options, candidates)` tries candidates in order and falls through on `fallthroughStatus`, which defaults to `[404]`.
+- `host()`, `method()`, and `splitTraffic()` live canonically in `@async/web/router` for richer route composition.
+
+Example:
 
 ```ts
-import { domain, toApp } from '@async/miniweb';
-
 routes: [
-  domain('api.local', toApp('api')),
-  toApp('frontend')
+  mount('/flags',
+    cacheFirst({
+      store: 'edge',
+      ttl: 30,
+      next: toApp('featureFlags')
+    })
+  ),
+  mount('/db/users', toApp('postgresUsers')),
+  mount('/db/feature-flags', toApp('edgeFeatureFlags')),
+  mount('/api', tryApp({}, [
+    toApp('bff'),
+    toApp('api')
+  ])),
+  toApp('web')
 ]
 ```
 
-Use `baseUrl` when an app should resolve relative URLs from a specific host:
-
-```ts
-api: {
-  app: apiApp,
-  baseUrl: 'https://api.local/'
-}
-```
-
-## Cache Stores
-
-`cacheFirst()` can write to different stores:
-
-```ts
-cacheFirst({
-  store: 'service-worker'
-});
-```
-
-```ts
-cacheFirst({
-  store: 'edge',
-  ttl: 60,
-  tags: ['api']
-});
-```
-
-```ts
-cacheFirst({
-  store: 'named:session'
-});
-```
-
-Store meanings:
-
-- `service-worker`: a platform Cache Storage cache named `service-worker`.
-- `edge`: the shared MiniWeb edge cache exposed at `web.edge.cache`.
-- `named:<name>`: a platform Cache Storage cache with a custom name.
-
-## Rewrites And Transforms
-
-```ts
-import { middleware, toApp } from '@async/miniweb';
-
-routes: [
-  middleware((_request, url) => url.pathname === '/docs', (request, _context, next) => {
-    const rewriteUrl = new URL(request.url);
-    rewriteUrl.pathname = '/docs/index';
-    return next(new Request(rewriteUrl, request));
-  }),
-  middleware(() => true, async (_request, _context, next) => {
-    const response = await next();
-    const html = await response.text();
-    return new Response(html.replace('</head>', '<meta name="edge" content="fake"></head>'), {
-      status: response.status,
-      headers: response.headers
-    });
-  }),
-  toApp('backend')
-]
-```
-
-Only inspect or consume bodies when the route explicitly transforms, caches, renders, or debugs the body.
+Cache stores remain runtime-owned. `@async/web/router` describes the cache intent, while `@async/web/runtime` executes cache behavior. Provider packages can later map those stores to edge, service-worker, static, or origin infrastructure.

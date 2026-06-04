@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "paths": {
+      "@async/router": [
+        "../router/src/index.ts"
+      ],
+      "@async/webruntime": [
+        "../webruntime/src/index.ts"
+      ],
+      "@async/webruntime/vite": [
+        "../webruntime/src/vite/index.ts"
+      ],
+      "@async/webruntime/*": [
+        "../webruntime/src/*"
+      ]
+    },
+    "types": [
+      "vitest/globals"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

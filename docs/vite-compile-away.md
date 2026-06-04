@@ -1,58 +1,31 @@
 # Vite Compile-Away
 
-MiniWeb can act as a development harness without becoming the production runtime. App code imports platform APIs from MiniWeb, and the Vite plugin swaps those imports by target.
-
-## Authoring
+App code can import platform APIs from WebRuntime during development:
 
 ```ts
-import { fetch, Request, Response, caches, localStorage } from '@async/miniweb/platform';
-
-export async function loadUser() {
-  const response = await fetch('/api/user');
-  return response.json();
-}
+import {
+  Request,
+  Response,
+  fetch,
+  localStorage
+} from '@async/web/runtime/platform';
 ```
 
-## Development Harness
+Use the Vite plugin:
 
 ```ts
-import { miniweb } from '@async/miniweb/vite';
+import { webRuntime } from '@async/web/runtime/vite';
 
 export default {
   plugins: [
-    miniweb()
+    webRuntime()
   ]
 };
 ```
 
-The default target is `auto`:
+Default behavior:
 
-- `vite dev` uses MiniWeb scoped platform APIs.
-- `vite build` uses native `globalThis` APIs.
+- `vite dev` resolves platform imports to scoped WebRuntime APIs.
+- `vite build` resolves platform imports to native `globalThis` APIs.
 
-## Static MiniWeb Demo
-
-Use this when a GitHub Pages-style demo should keep MiniWeb routing after build:
-
-```ts
-miniweb({
-  target: 'miniweb',
-  app: '/src/examples/simple-fullstack/miniweb.ts'
-});
-```
-
-The `app` string is imported by Vite and used to create a MiniWeb instance for the platform module. Code can also bind a MiniWeb instance manually with `setMiniWebPlatform(web)`.
-
-## Native App Target
-
-Use this when you want source imports to resolve to native browser APIs in both dev and build:
-
-```ts
-miniweb({
-  target: 'native'
-});
-```
-
-## Non-Goal
-
-The v1 plugin does not rewrite bare globals such as `fetch('/api')`. Use imports from `@async/miniweb/platform` so the code remains explicit, typeable, and easy to compile away.
+Use `webRuntime({ target: 'web-runtime' })` for static demos that should keep the route graph after build, or `webRuntime({ target: 'native' })` to use native APIs in both dev and build.

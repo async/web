@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "WebRuntime Local Redirect",
+  "version": "0.0.0",
+  "description": "Redirects the WebRuntime Tailscale preview hostname to the local WebRuntime preview server on this Mac.",
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://patrickjs-macbook-pro.lynx-in.ts.net/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "async-web-local-redirect",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

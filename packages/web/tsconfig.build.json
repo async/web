@@ -1,0 +1,32 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": false,
+    "baseUrl": ".",
+    "paths": {
+      "@async/router": [
+        "../router/dist/index.d.ts"
+      ],
+      "@async/webruntime": [
+        "../webruntime/dist/index.d.ts"
+      ],
+      "@async/webruntime/vite": [
+        "../webruntime/dist/vite/index.d.ts"
+      ],
+      "@async/webruntime/*": [
+        "../webruntime/dist/*"
+      ]
+    },
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "tests/**/*.ts"
+  ]
+}
