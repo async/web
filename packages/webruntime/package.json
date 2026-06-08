@@ -39,6 +39,10 @@
       "types": "./dist/node/index.d.ts",
       "default": "./dist/node/index.js"
     },
+    "./node/mini-cloudflare": {
+      "types": "./dist/node/create-mini-cloudflare-preview-server.d.ts",
+      "default": "./dist/node/create-mini-cloudflare-preview-server.js"
+    },
     "./edge": {
       "types": "./dist/edge/index.d.ts",
       "default": "./dist/edge/index.js"

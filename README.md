@@ -136,6 +136,7 @@ pnpm build
 - [Routes and Cache](docs/routes-and-cache.md)
 - [Platform and Runtimes](docs/platform-and-runtimes.md)
 - [AsyncDB Integration](docs/async-db-integration.md)
+- [Mini Cloudflare](docs/mini-cloudflare.md)
 - [Vite Compile-Away](docs/vite-compile-away.md)
 - [Migration Guide](docs/migration-from-miniweb.md)
 

@@ -1,6 +1,6 @@
 {
   "name": "@async/web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Developer-facing Async app framework that lowers app conventions into WebRuntime configs.",
   "license": "MIT",
@@ -61,6 +61,10 @@
     "./runtime/node": {
       "types": "./dist/runtime/node/index.d.ts",
       "default": "./dist/runtime/node/index.js"
+    },
+    "./runtime/node/mini-cloudflare": {
+      "types": "./dist/runtime/node/create-mini-cloudflare-preview-server.d.ts",
+      "default": "./dist/runtime/node/create-mini-cloudflare-preview-server.js"
     },
     "./runtime/platform": {
       "types": "./dist/runtime/platform/index.d.ts",

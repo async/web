@@ -15,6 +15,7 @@ Async Web has three public import layers in one npm package:
 - [Routes and Cache](routes-and-cache.md)
 - [Platform and Runtimes](platform-and-runtimes.md)
 - [AsyncDB Integration](async-db-integration.md)
+- [Mini Cloudflare](mini-cloudflare.md)
 - [Vite Compile-Away](vite-compile-away.md)
 - [Migration Guide](migration-from-miniweb.md)
 

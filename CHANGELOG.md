@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.1](https://github.com/async-framework/async-web/releases/tag/v0.1.1) - 2026-06-08
+
+### Features
+
+- Added a Mini Cloudflare provider shim for local Worker-shaped deployments with ASSETS, KV, R2, D1, `ctx.waitUntil()`, `caches.default`, virtual preview URLs, and WebRuntime-backed execution.
+- Added a Node preview server helper for serving Mini Cloudflare deployments on real `127.0.0.1` URLs for browser and Tailscale iteration.
+
+### Documentation
+
+- Added a Mini Cloudflare guide that maps the local provider shim to Async Webapps build, deployment, preview, and future Cloudflare adapter flows.
+
 ## [0.1.0](https://github.com/async-framework/async-web/releases/tag/v0.1.0) - 2026-05-28
 
 Initial public release of Async Web as `@async/web`.
