@@ -8,12 +8,18 @@
   "packageManager": "pnpm@10.20.0",
   "scripts": {
     "build": "pnpm --dir packages/router build && pnpm --dir packages/webruntime build && pnpm --dir packages/web build",
-    "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
     "lint": "pnpm -r lint",
-    "release:check": "pnpm typecheck && pnpm test && pnpm build && pnpm --dir packages/web run pack:check"
+    "pipeline:github:generate": "async-pipeline github generate",
+    "pipeline:sync:check": "async-pipeline sync check",
+    "pipeline:verify": "async-pipeline run verify",
+    "release:check": "pnpm async-pipeline run verify --force",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@async/pipeline": "^0.2.0"
   }
 }
