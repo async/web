@@ -69,7 +69,7 @@ jobs:
 
   pages:
     name: pages
-    if: (github.event_name == 'push' && (github.ref == 'refs/heads/main')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'pages')
+    if: (github.event_name == 'pull_request') || (github.event_name == 'push' && (github.ref == 'refs/heads/main')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'pages')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -114,7 +114,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: "_site"
+          path: ".async/pages"
 
   pages-deploy:
     name: pages-deploy
