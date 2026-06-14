@@ -5,14 +5,14 @@
   "type": "module",
   "description": "Request-to-Response web runtime graph with route middleware, scoped platform APIs, cache stores, and provider extension points.",
   "license": "MIT",
-  "homepage": "https://github.com/async-framework/async-web/tree/main/packages/webruntime#readme",
+  "homepage": "https://github.com/async/web/tree/main/packages/webruntime#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/async-framework/async-web.git",
+    "url": "git+https://github.com/async/web.git",
     "directory": "packages/webruntime"
   },
   "bugs": {
-    "url": "https://github.com/async-framework/async-web/issues"
+    "url": "https://github.com/async/web/issues"
   },
   "exports": {
     ".": {
@@ -90,7 +90,7 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "devDependencies": {
     "happy-dom": "20.9.0",

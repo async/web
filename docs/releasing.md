@@ -11,36 +11,36 @@ This workspace publishes one npm package:
 Use the workspace release gate before tagging:
 
 ```sh
-pnpm release:check
+pnpm run release:check
 ```
 
-This runs package typechecks, tests, builds, and `npm pack --dry-run` for the publishable package through the workspace `pack:check` scripts.
+This runs the generated `pipeline:verify` job with a forced pipeline pass. It checks package typechecks, tests, builds, `npm pack --dry-run` for `packages/web`, the API surface ledger, and the GitHub Pages site build.
 
-When a release tag is pushed, the `Release` workflow installs with pnpm, verifies the workspace, packs `@async/web`, publishes it to npm, creates the GitHub Release if needed, and uploads the tarball.
+The generated `Async Pipeline` workflow owns PR previews, main snapshots, stable GitHub Packages mirrors, npm publish, release doctor, and Pages jobs.
 
 ## npm Trusted Publishing
 
 Configure npm Trusted Publishing for the package:
 
 - npm package: `@async/web`
-- GitHub owner/repository: `async-framework/async-web`
-- Workflow filename: `release.yml`
+- GitHub owner/repository: `async/web`
+- Workflow filename: `async-pipeline.yml`
 - Environment: leave unset unless npm requires one for the package
 
-The workflow uses GitHub OIDC with `id-token: write`; it does not use an `NPM_TOKEN` secret.
+The generated stable release job uses the `npm-publish` environment, GitHub OIDC with `id-token: write`, the automatic `github.token` for GitHub Packages and release doctor checks, and `NPM_TOKEN` as `NODE_AUTH_TOKEN` for npm.
 
 ## Local Verification
 
 Run this before tagging or merging a release PR:
 
 ```sh
-pnpm release:check
+pnpm run release:check
 ```
 
 For package-local verification:
 
 ```sh
-pnpm --filter @async/web typecheck
+pnpm --dir packages/web typecheck
 ```
 
 ## Migration Note

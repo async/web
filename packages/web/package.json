@@ -1,17 +1,17 @@
 {
   "name": "@async/web",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "description": "Developer-facing Async app framework that lowers app conventions into WebRuntime configs.",
   "license": "MIT",
-  "homepage": "https://github.com/async-framework/async-web/tree/main/packages/web#readme",
+  "homepage": "https://github.com/async/web/tree/main/packages/web#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/async-framework/async-web.git",
+    "url": "git+https://github.com/async/web.git",
     "directory": "packages/web"
   },
   "bugs": {
-    "url": "https://github.com/async-framework/async-web/issues"
+    "url": "https://github.com/async/web/issues"
   },
   "exports": {
     ".": {
@@ -116,6 +116,6 @@
     "vitest": "4.1.6"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }

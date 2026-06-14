@@ -5,14 +5,14 @@
   "type": "module",
   "description": "Pure structured route specs and composition helpers for Async Web.",
   "license": "MIT",
-  "homepage": "https://github.com/async-framework/async-web/tree/main/packages/router#readme",
+  "homepage": "https://github.com/async/web/tree/main/packages/router#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/async-framework/async-web.git",
+    "url": "git+https://github.com/async/web.git",
     "directory": "packages/router"
   },
   "bugs": {
-    "url": "https://github.com/async-framework/async-web/issues"
+    "url": "https://github.com/async/web/issues"
   },
   "exports": {
     ".": {
@@ -37,6 +37,6 @@
     "vitest": "4.1.6"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }

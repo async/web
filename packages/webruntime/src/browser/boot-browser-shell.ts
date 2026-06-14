@@ -158,8 +158,8 @@ export async function bootBrowserShell(root: Document = document, initialPath = 
     event.preventDefault();
   });
 
-  await web.terminal.run('npm install');
-  await web.terminal.run('npm run dev');
+  await web.terminal.run('pnpm install');
+  await web.terminal.run('pnpm run dev');
   await navigate(initialPath);
   return web;
 }

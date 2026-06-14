@@ -6,11 +6,7 @@
   "runners": [
     "package"
   ],
-  "targets": [
-    {
-      "package": "async-web"
-    }
-  ],
+  "targets": "root",
   "manifests": [
     {
       "path": "package.json",
@@ -18,34 +14,186 @@
       "field": "scripts",
       "commands": [
         {
+          "name": "pipeline:main-snapshot",
+          "value": "async-pipeline run main-snapshot"
+        },
+        {
+          "name": "pipeline:pages",
+          "value": "async-pipeline run pages"
+        },
+        {
+          "name": "pipeline:pr-preview",
+          "value": "async-pipeline run pr-preview"
+        },
+        {
+          "name": "pipeline:stable-release",
+          "value": "async-pipeline run stable-release"
+        },
+        {
           "name": "pipeline:verify",
           "value": "async-pipeline run verify"
+        },
+        {
+          "name": "pipeline:task:api-ledger",
+          "value": "async-pipeline run-task api-ledger"
+        },
+        {
+          "name": "pipeline:task:api-surface",
+          "value": "async-pipeline run-task api-surface"
+        },
+        {
+          "name": "pipeline:task:pack",
+          "value": "async-pipeline run-task pack"
+        },
+        {
+          "name": "pipeline:task:pages-build",
+          "value": "async-pipeline run-task pages-build"
+        },
+        {
+          "name": "pipeline:api-surface",
+          "value": "async-pipeline run-task api-surface"
+        },
+        {
+          "name": "pipeline:api:surface:generate",
+          "value": "async-pipeline run-task api-ledger"
+        },
+        {
+          "name": "pipeline:github:check",
+          "value": "async-pipeline github check"
         },
         {
           "name": "pipeline:github:generate",
           "value": "async-pipeline github generate"
         },
         {
+          "name": "pipeline:publish:github:main",
+          "value": "async-pipeline publish github main --package packages/web"
+        },
+        {
+          "name": "pipeline:publish:github:pr",
+          "value": "async-pipeline publish github pr --package packages/web"
+        },
+        {
+          "name": "pipeline:publish:github:release",
+          "value": "async-pipeline publish github release --package packages/web"
+        },
+        {
+          "name": "pipeline:publish:npm",
+          "value": "async-pipeline publish npm --package packages/web"
+        },
+        {
+          "name": "pipeline:release:doctor",
+          "value": "async-pipeline release doctor --package packages/web"
+        },
+        {
+          "name": "pipeline:release:ensure",
+          "value": "async-pipeline release ensure --package packages/web"
+        },
+        {
           "name": "pipeline:sync:check",
           "value": "async-pipeline sync check"
+        },
+        {
+          "name": "pipeline:sync:generate",
+          "value": "async-pipeline sync generate"
+        },
+        {
+          "name": "pipeline:verify:force",
+          "value": "async-pipeline run verify --force"
         }
       ]
     }
   ],
   "commands": [
     {
+      "name": "pipeline:main-snapshot",
+      "value": "async-pipeline run main-snapshot"
+    },
+    {
+      "name": "pipeline:pages",
+      "value": "async-pipeline run pages"
+    },
+    {
+      "name": "pipeline:pr-preview",
+      "value": "async-pipeline run pr-preview"
+    },
+    {
+      "name": "pipeline:stable-release",
+      "value": "async-pipeline run stable-release"
+    },
+    {
       "name": "pipeline:verify",
       "value": "async-pipeline run verify"
+    },
+    {
+      "name": "pipeline:task:api-ledger",
+      "value": "async-pipeline run-task api-ledger"
+    },
+    {
+      "name": "pipeline:task:api-surface",
+      "value": "async-pipeline run-task api-surface"
+    },
+    {
+      "name": "pipeline:task:pack",
+      "value": "async-pipeline run-task pack"
+    },
+    {
+      "name": "pipeline:task:pages-build",
+      "value": "async-pipeline run-task pages-build"
+    },
+    {
+      "name": "pipeline:api-surface",
+      "value": "async-pipeline run-task api-surface"
+    },
+    {
+      "name": "pipeline:api:surface:generate",
+      "value": "async-pipeline run-task api-ledger"
+    },
+    {
+      "name": "pipeline:github:check",
+      "value": "async-pipeline github check"
     },
     {
       "name": "pipeline:github:generate",
       "value": "async-pipeline github generate"
     },
     {
+      "name": "pipeline:publish:github:main",
+      "value": "async-pipeline publish github main --package packages/web"
+    },
+    {
+      "name": "pipeline:publish:github:pr",
+      "value": "async-pipeline publish github pr --package packages/web"
+    },
+    {
+      "name": "pipeline:publish:github:release",
+      "value": "async-pipeline publish github release --package packages/web"
+    },
+    {
+      "name": "pipeline:publish:npm",
+      "value": "async-pipeline publish npm --package packages/web"
+    },
+    {
+      "name": "pipeline:release:doctor",
+      "value": "async-pipeline release doctor --package packages/web"
+    },
+    {
+      "name": "pipeline:release:ensure",
+      "value": "async-pipeline release ensure --package packages/web"
+    },
+    {
       "name": "pipeline:sync:check",
       "value": "async-pipeline sync check"
+    },
+    {
+      "name": "pipeline:sync:generate",
+      "value": "async-pipeline sync generate"
+    },
+    {
+      "name": "pipeline:verify:force",
+      "value": "async-pipeline run verify --force"
     }
   ],
-  "hash": "sha256:b8f313edecc2d372a6b53183b2d8898fc9205f4e90bc441b63b41671eb02accc",
-  "generatedAt": "2026-06-11T19:54:11.844Z"
+  "hash": "sha256:8a62a2e29939bfcd2e084c0415093e8cbf42d1762012f5190199a545bbe75927",
+  "generatedAt": "2026-06-14T11:02:45.181Z"
 }

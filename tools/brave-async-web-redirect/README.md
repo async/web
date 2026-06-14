@@ -17,7 +17,7 @@ It only redirects top-level page navigations for the WebRuntime preview hostname
 4. Select this folder:
 
 ```txt
-/Users/patrickjs/code/async-framework/async-web/tools/brave-async-web-redirect
+/Users/patrickjs/code/async/web/tools/brave-async-web-redirect
 ```
 
 Then open:
