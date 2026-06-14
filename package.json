@@ -20,6 +20,7 @@
     "pipeline:publish:github:pr": "async-pipeline publish github pr --package packages/web",
     "pipeline:publish:github:release": "async-pipeline publish github release --package packages/web",
     "pipeline:publish:npm": "async-pipeline publish npm --package packages/web",
+    "pipeline:release-doctor": "async-pipeline run release-doctor",
     "pipeline:release:doctor": "async-pipeline release doctor --package packages/web",
     "pipeline:release:ensure": "async-pipeline release ensure --package packages/web",
     "pipeline:stable-release": "async-pipeline run stable-release",
