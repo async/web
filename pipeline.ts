@@ -139,6 +139,12 @@ export default definePipeline({
         sh`pnpm async-pipeline release doctor --package ${publishPackage}`
       ]
     }),
+    "release-doctor": task({
+      description: "Verify the published package, GitHub release, and registry state.",
+      inputs: ["packages/web/package.json"],
+      cache: false,
+      run: sh`pnpm async-pipeline release doctor --package ${publishPackage}`
+    }),
     "release-ensure": task({
       description: "Create or verify the release tag and GitHub Release before package publishing.",
       dependsOn: ["pack"],
@@ -196,6 +202,19 @@ export default definePipeline({
           contents: "write",
           idToken: "write",
           packages: "write"
+        }
+      }
+    }),
+    "release-doctor": job({
+      target: "release-doctor",
+      trigger: ["manual"],
+      env: {
+        GITHUB_TOKEN: env.secret("GITHUB_TOKEN")
+      },
+      github: {
+        permissions: {
+          contents: "read",
+          packages: "read"
         }
       }
     }),

@@ -3,8 +3,8 @@
   "generator": "@async/pipeline",
   "config": "pipeline.ts",
   "workflow": ".github/workflows/async-pipeline.yml",
-  "hash": "sha256:ad5f535d514eae1cc2a3ef1117b963746f8806fe8981ca58bf020c3c1411beee",
-  "generatedAt": "2026-06-14T11:02:45.179Z",
+  "hash": "sha256:4659c638d8e8ba46401a67281fcf970546e855513dea373ebd2472996ef2f243",
+  "generatedAt": "2026-06-14T11:16:50.759Z",
   "triggers": {
     "pull_request": {},
     "push": {
@@ -88,6 +88,28 @@
       "if": "github.event_name == 'pull_request'"
     },
     {
+      "id": "release-doctor",
+      "target": [
+        "release-doctor"
+      ],
+      "trigger": [
+        "manual"
+      ],
+      "env": {
+        "GITHUB_TOKEN": {
+          "kind": "async-pipeline.env.secret",
+          "name": "GITHUB_TOKEN"
+        }
+      },
+      "github": {
+        "permissions": {
+          "contents": "read",
+          "packages": "read"
+        }
+      },
+      "if": "github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'release-doctor'"
+    },
+    {
       "id": "stable-release",
       "target": [
         "stable-release"
@@ -139,6 +161,7 @@
   "taskCache": true,
   "manualDispatchJobs": [
     "pages",
+    "release-doctor",
     "stable-release"
   ]
 }

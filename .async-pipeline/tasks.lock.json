@@ -26,6 +26,10 @@
           "value": "async-pipeline run pr-preview"
         },
         {
+          "name": "pipeline:release-doctor",
+          "value": "async-pipeline run release-doctor"
+        },
+        {
           "name": "pipeline:stable-release",
           "value": "async-pipeline run stable-release"
         },
@@ -118,6 +122,10 @@
       "value": "async-pipeline run pr-preview"
     },
     {
+      "name": "pipeline:release-doctor",
+      "value": "async-pipeline run release-doctor"
+    },
+    {
       "name": "pipeline:stable-release",
       "value": "async-pipeline run stable-release"
     },
@@ -194,6 +202,6 @@
       "value": "async-pipeline run verify --force"
     }
   ],
-  "hash": "sha256:8a62a2e29939bfcd2e084c0415093e8cbf42d1762012f5190199a545bbe75927",
-  "generatedAt": "2026-06-14T11:02:45.181Z"
+  "hash": "sha256:5898585e37721d8a8e57f8ae1869620960367fd9c23746855417f405cfeb2fc4",
+  "generatedAt": "2026-06-14T11:16:50.761Z"
 }
