@@ -35,15 +35,15 @@ Same realm is the default because it matches the static-hosted demo use case. If
 The terminal is fake and deterministic. It supports commands such as:
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ls
 cat /server.js
 help
 clear
 ```
 
-`npm run dev` marks the fake terminal runtime as running and prints a local URL. It does not execute arbitrary npm packages.
+`pnpm run dev` marks the fake terminal runtime as running and prints a local URL. It does not execute arbitrary npm packages.
 
 ## Phone Review Through Tailscale Serve
 

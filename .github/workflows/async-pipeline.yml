@@ -8,12 +8,223 @@ on:
   push:
     branches:
       - "main"
+  release:
   workflow_dispatch:
+    inputs:
+      job:
+        description: "Pipeline job to run"
+        required: true
+        type: choice
+        options:
+          - "pages"
+          - "stable-release"
 
 permissions:
   contents: read
 
 jobs:
+  main-snapshot:
+    name: main-snapshot
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Restore task cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .async/cache
+          key: async-pipeline-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            async-pipeline-${{ runner.os }}-
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.20.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check generated workflow
+        run: pnpm async-pipeline github check
+
+      - name: Run pipeline job
+        run: pnpm async-pipeline run main-snapshot
+        env:
+          CI: true
+          GITHUB_TOKEN: "${{ github.token }}"
+
+  pages:
+    name: pages
+    if: (github.event_name == 'push' && (github.ref == 'refs/heads/main')) || (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'pages')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Restore task cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .async/cache
+          key: async-pipeline-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            async-pipeline-${{ runner.os }}-
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.20.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check generated workflow
+        run: pnpm async-pipeline github check
+
+      - name: Run pipeline job
+        run: pnpm async-pipeline run pages
+        env:
+          CI: true
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: "_site"
+
+  pages-deploy:
+    name: pages-deploy
+    needs: "pages"
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: "github-pages"
+      url: "${{ steps.deployment.outputs.page_url }}"
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  pr-preview:
+    name: pr-preview
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      packages: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Restore task cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .async/cache
+          key: async-pipeline-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            async-pipeline-${{ runner.os }}-
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.20.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check generated workflow
+        run: pnpm async-pipeline github check
+
+      - name: Run pipeline job
+        run: pnpm async-pipeline run pr-preview
+        env:
+          CI: true
+          GITHUB_TOKEN: "${{ github.token }}"
+
+  stable-release:
+    name: stable-release
+    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.job == 'stable-release') || (github.event_name == 'release')
+    runs-on: ubuntu-latest
+    environment: "npm-publish"
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Restore task cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .async/cache
+          key: async-pipeline-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            async-pipeline-${{ runner.os }}-
+
+      - name: Setup Node
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+
+      - name: Use current npm
+        run: npm install -g npm@11.16.0
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.20.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check generated workflow
+        run: pnpm async-pipeline github check
+
+      - name: Run pipeline job
+        run: pnpm async-pipeline run stable-release
+        env:
+          CI: true
+          GITHUB_TOKEN: "${{ github.token }}"
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   verify:
     name: verify
     if: (github.event_name == 'pull_request') || (github.event_name == 'push' && (github.ref == 'refs/heads/main'))

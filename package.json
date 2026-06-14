@@ -9,17 +9,37 @@
   "scripts": {
     "build": "pnpm --dir packages/router build && pnpm --dir packages/webruntime build && pnpm --dir packages/web build",
     "lint": "pnpm -r lint",
+    "pipeline:api-surface": "async-pipeline run-task api-surface",
+    "pipeline:api:surface:generate": "async-pipeline run-task api-ledger",
+    "pipeline:github:check": "async-pipeline github check",
     "pipeline:github:generate": "async-pipeline github generate",
+    "pipeline:main-snapshot": "async-pipeline run main-snapshot",
+    "pipeline:pages": "async-pipeline run pages",
+    "pipeline:pr-preview": "async-pipeline run pr-preview",
+    "pipeline:publish:github:main": "async-pipeline publish github main --package packages/web",
+    "pipeline:publish:github:pr": "async-pipeline publish github pr --package packages/web",
+    "pipeline:publish:github:release": "async-pipeline publish github release --package packages/web",
+    "pipeline:publish:npm": "async-pipeline publish npm --package packages/web",
+    "pipeline:release:doctor": "async-pipeline release doctor --package packages/web",
+    "pipeline:release:ensure": "async-pipeline release ensure --package packages/web",
+    "pipeline:stable-release": "async-pipeline run stable-release",
     "pipeline:sync:check": "async-pipeline sync check",
+    "pipeline:sync:generate": "async-pipeline sync generate",
+    "pipeline:task:api-ledger": "async-pipeline run-task api-ledger",
+    "pipeline:task:api-surface": "async-pipeline run-task api-surface",
+    "pipeline:task:pack": "async-pipeline run-task pack",
+    "pipeline:task:pages-build": "async-pipeline run-task pages-build",
     "pipeline:verify": "async-pipeline run verify",
-    "release:check": "pnpm async-pipeline run verify --force",
+    "pipeline:verify:force": "async-pipeline run verify --force",
+    "release:check": "pnpm run pipeline:verify:force",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "devDependencies": {
-    "@async/pipeline": "^0.2.0"
+    "@async/api-contract": "0.1.0",
+    "@async/pipeline": "0.4.3"
   }
 }

@@ -6,7 +6,14 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@async/api-contract':
+        specifier: 0.1.0
+        version: 0.1.0
+      '@async/pipeline':
+        specifier: 0.4.3
+        version: 0.4.3
 
   packages/router:
     devDependencies:
@@ -42,6 +49,16 @@ importers:
         version: 4.1.6(@types/node@25.9.1)(happy-dom@20.9.0)(vite@8.0.13(@types/node@25.9.1))
 
 packages:
+
+  '@async/api-contract@0.1.0':
+    resolution: {integrity: sha512-kyeqE/Smmwwadwh7Zvs0LZoXuIh7k+6G5rqdyWIjY6vHLZQ1emp9EpL/20m6DtmjauTJxMNn/R7FQACUwfBeUw==}
+    engines: {node: '>=24'}
+    hasBin: true
+
+  '@async/pipeline@0.4.3':
+    resolution: {integrity: sha512-aY/4Tv+GEcXupS2nVsjeCsgBqT1OmuXjpznkfDIDuwYdlBGwjmXsPzERJLNZ3PAeTi4hNhRi+gDA/2ADkAc6gA==}
+    engines: {node: '>=24'}
+    hasBin: true
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -511,6 +528,10 @@ packages:
         optional: true
 
 snapshots:
+
+  '@async/api-contract@0.1.0': {}
+
+  '@async/pipeline@0.4.3': {}
 
   '@emnapi/core@1.10.0':
     dependencies:

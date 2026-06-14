@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/async/web/releases/tag/v0.2.0) - 2026-06-14
+
+### Features
+
+- Add generated `@async/pipeline` release, preview, snapshot, GitHub Pages, and API surface workflows for the Async org release standard.
+- Add API surface ledger artifacts and pnpm-first release documentation for the publishable `@async/web` package.
+
+### Changed
+
+- Standardize docs and package task examples on pnpm and `pnpm run <pipeline-name>`.
+- Replace the standalone release workflow with the generated `async-pipeline.yml`.
+
 ## [0.1.1](https://github.com/async-framework/async-web/releases/tag/v0.1.1) - 2026-06-08
 
 ### Features

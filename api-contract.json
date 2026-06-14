@@ -1,0 +1,399 @@
+{
+  "format": "api-contract.package.v1",
+  "packageName": "@async/web",
+  "catalogs": [
+    {
+      "format": "api-contract.catalog.v1",
+      "contractId": "@async/web.package",
+      "title": "Async Web Package Surface",
+      "features": [
+        {
+          "id": "metadata.name",
+          "title": "Package name is @async/web",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-metadata",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/package.json"
+        },
+        {
+          "id": "metadata.node24",
+          "title": "Node.js 24 runtime floor",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-metadata",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/package.json"
+        },
+        {
+          "id": "metadata.public-npm",
+          "title": "Public npm publish configuration",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-metadata",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/package.json"
+        },
+        {
+          "id": "export.root",
+          "title": "Root package export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/src/index.ts"
+        },
+        {
+          "id": "export.app",
+          "title": "App framework subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/src/app.ts"
+        },
+        {
+          "id": "export.config",
+          "title": "App config subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/src/config.ts"
+        },
+        {
+          "id": "export.router",
+          "title": "Structured router subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/router/src/index.ts"
+        },
+        {
+          "id": "export.routes",
+          "title": "Route helper subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/src/routes.ts"
+        },
+        {
+          "id": "export.runtime",
+          "title": "WebRuntime root subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/index.ts"
+        },
+        {
+          "id": "export.runtime.app",
+          "title": "WebRuntime app subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/app.ts"
+        },
+        {
+          "id": "export.runtime.async-db",
+          "title": "AsyncDB runtime adapter subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/async-db/index.ts"
+        },
+        {
+          "id": "export.runtime.browser",
+          "title": "Browser runtime subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/browser/index.ts"
+        },
+        {
+          "id": "export.runtime.cache",
+          "title": "Runtime cache subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/cache/index.ts"
+        },
+        {
+          "id": "export.runtime.edge",
+          "title": "Edge runtime subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/edge/index.ts"
+        },
+        {
+          "id": "export.runtime.node",
+          "title": "Node runtime subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/node/index.ts"
+        },
+        {
+          "id": "export.runtime.node-mini-cloudflare",
+          "title": "Mini Cloudflare preview server subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/node/create-mini-cloudflare-preview-server.ts"
+        },
+        {
+          "id": "export.runtime.platform",
+          "title": "Runtime platform globals subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/platform/index.ts"
+        },
+        {
+          "id": "export.runtime.providers",
+          "title": "Provider extension subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/providers/index.ts"
+        },
+        {
+          "id": "export.runtime.routes",
+          "title": "Runtime middleware route helpers subpath export",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/routes.ts"
+        },
+        {
+          "id": "export.runtime.testing",
+          "title": "Runtime testing helper subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/testing/index.ts"
+        },
+        {
+          "id": "export.runtime.tracing",
+          "title": "Runtime tracing helper subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/tracing/index.ts"
+        },
+        {
+          "id": "export.runtime.vite",
+          "title": "Runtime Vite plugin subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/vite/index.ts"
+        },
+        {
+          "id": "export.vite",
+          "title": "Async Web Vite plugin subpath export",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "package-exports",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/src/vite.ts"
+        },
+        {
+          "id": "app.defineApp",
+          "title": "defineApp application config entrypoint",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        },
+        {
+          "id": "app.browserApp",
+          "title": "Browser app descriptor helper",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        },
+        {
+          "id": "app.fetchApp",
+          "title": "Fetch app descriptor helper",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        },
+        {
+          "id": "app.asyncDbApp",
+          "title": "AsyncDB app descriptor helper",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/async-db-integration.md"
+        },
+        {
+          "id": "app.remoteApp",
+          "title": "Remote app contract descriptor helper",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        },
+        {
+          "id": "app.envValue",
+          "title": "Environment-specific topology value helper",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "app-framework",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        },
+        {
+          "id": "router.structured-routes",
+          "title": "Structured route spec helpers",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "router",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/router.md"
+        },
+        {
+          "id": "router.cache-routes",
+          "title": "Cache route strategy helpers",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "router",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/routes-and-cache.md"
+        },
+        {
+          "id": "router.validation",
+          "title": "Route normalization, validation, and table printing",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "router",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/router.md"
+        },
+        {
+          "id": "runtime.defineRuntime",
+          "title": "defineRuntime WebRuntime config entrypoint",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/platform-and-runtimes.md"
+        },
+        {
+          "id": "runtime.createWebRuntime",
+          "title": "Request-to-response runtime graph executor",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/platform-and-runtimes.md"
+        },
+        {
+          "id": "runtime.middleware-routes",
+          "title": "Runtime middleware route helpers",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/routes-and-cache.md"
+        },
+        {
+          "id": "runtime.platform",
+          "title": "Scoped runtime platform APIs",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/platform-and-runtimes.md"
+        },
+        {
+          "id": "runtime.provider-hooks",
+          "title": "Provider extension hooks",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/platform-and-runtimes.md"
+        },
+        {
+          "id": "runtime.mini-cloudflare",
+          "title": "Mini Cloudflare local preview utilities",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/mini-cloudflare.md"
+        },
+        {
+          "id": "runtime.testing",
+          "title": "Runtime testing and trace assertion helpers",
+          "releaseTag": "beta",
+          "stability": "preview",
+          "group": "runtime",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/webruntime/src/testing/index.ts"
+        },
+        {
+          "id": "docs.readme",
+          "title": "Root README public package guide",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "docs",
+          "docsUrl": "https://github.com/async/web/blob/main/README.md"
+        },
+        {
+          "id": "docs.guides",
+          "title": "Public docs guide index",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "docs",
+          "docsUrl": "https://github.com/async/web/blob/main/docs/README.md"
+        },
+        {
+          "id": "docs.package-readme",
+          "title": "Package README app authoring guide",
+          "releaseTag": "public",
+          "stability": "stable",
+          "group": "docs",
+          "docsUrl": "https://github.com/async/web/blob/main/packages/web/README.md"
+        }
+      ]
+    }
+  ],
+  "supported": [
+    {
+      "format": "api-contract.surface.v1",
+      "contractId": "@async/web.package",
+      "features": [
+        "app.asyncDbApp",
+        "app.browserApp",
+        "app.defineApp",
+        "app.envValue",
+        "app.fetchApp",
+        "app.remoteApp",
+        "docs.guides",
+        "docs.package-readme",
+        "docs.readme",
+        "export.app",
+        "export.config",
+        "export.root",
+        "export.router",
+        "export.routes",
+        "export.runtime",
+        "export.runtime.app",
+        "export.runtime.async-db",
+        "export.runtime.browser",
+        "export.runtime.cache",
+        "export.runtime.edge",
+        "export.runtime.node",
+        "export.runtime.node-mini-cloudflare",
+        "export.runtime.platform",
+        "export.runtime.providers",
+        "export.runtime.routes",
+        "export.runtime.testing",
+        "export.runtime.tracing",
+        "export.runtime.vite",
+        "export.vite",
+        "metadata.name",
+        "metadata.node24",
+        "metadata.public-npm",
+        "router.cache-routes",
+        "router.structured-routes",
+        "router.validation",
+        "runtime.createWebRuntime",
+        "runtime.defineRuntime",
+        "runtime.middleware-routes",
+        "runtime.mini-cloudflare",
+        "runtime.platform",
+        "runtime.provider-hooks",
+        "runtime.testing"
+      ]
+    }
+  ]
+}

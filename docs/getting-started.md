@@ -2,6 +2,10 @@
 
 Start with `@async/web` when you are building an application and want defaults. Use explicit `apps` and `routes` when the app is multiple systems wired together.
 
+```sh
+pnpm add @async/web
+```
+
 ```ts
 import {
   browserApp,

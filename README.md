@@ -19,6 +19,10 @@ The original runtime direction is preserved: apps, routes, scoped platform APIs,
 
 ## Quick Start
 
+```sh
+pnpm add @async/web
+```
+
 ```ts
 import {
   asyncDbApp,
@@ -122,9 +126,9 @@ export default defineRuntime({
 
 ```sh
 pnpm install
-pnpm typecheck
-pnpm test
-pnpm build
+pnpm run pipeline:verify
+pnpm run pipeline:pages
+pnpm run release:check
 ```
 
 ## Docs

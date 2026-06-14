@@ -30,7 +30,7 @@ rewritePublicSpecifiers(dist);
 
 function assertInternalPackageBuilt(directory, label) {
   if (!existsSync(directory)) {
-    throw new Error(`${label} must be built before @async/web can embed it. Run pnpm build from the workspace root.`);
+    throw new Error(`${label} must be built before @async/web can embed it. Run pnpm run build from the workspace root.`);
   }
 }
 

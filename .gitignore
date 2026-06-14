@@ -1,6 +1,7 @@
 /docs/goals
 /node_modules
 /dist
+/_site
 /node_modules
 /packages/*/node_modules
 /packages/*/dist

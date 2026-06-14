@@ -36,10 +36,10 @@ export function createTerminalRuntime(options: {
       }
       return result(command, await options.fs.readFile(path));
     }
-    if (command === 'npm' && args.join(' ') === 'install') {
+    if ((command === 'npm' || command === 'pnpm') && args.join(' ') === 'install') {
       return result(command, 'added fake packages\nfound 0 vulnerabilities');
     }
-    if (command === 'npm' && args.join(' ') === 'run dev') {
+    if ((command === 'npm' || command === 'pnpm') && args.join(' ') === 'run dev') {
       options.setRunning?.(true);
       return result(command, `WebRuntime dev server ready\nLocal: ${options.origin}/`);
     }
@@ -52,7 +52,7 @@ export function createTerminalRuntime(options: {
       return result(command, '');
     }
     if (command === 'help') {
-      return result(command, 'ls\ncat <file>\nnpm install\nnpm run dev\nnode server.js\nclear\nhelp');
+      return result(command, 'ls\ncat <file>\npnpm install\npnpm run dev\nnode server.js\nclear\nhelp');
     }
     return result(command, `command not found: ${[command, ...args].join(' ')}`, 127);
   }
