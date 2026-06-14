@@ -3,8 +3,8 @@
   "generator": "@async/pipeline",
   "config": "pipeline.ts",
   "workflow": ".github/workflows/async-pipeline.yml",
-  "hash": "sha256:68ddc0841bc564739f738170d7609ce0553ec08158bfec712854dccf79af82b4",
-  "generatedAt": "2026-06-14T10:42:44.808Z",
+  "hash": "sha256:ad5f535d514eae1cc2a3ef1117b963746f8806fe8981ca58bf020c3c1411beee",
+  "generatedAt": "2026-06-14T11:02:45.179Z",
   "triggers": {
     "pull_request": {},
     "push": {
@@ -25,7 +25,10 @@
         "main"
       ],
       "env": {
-        "GITHUB_TOKEN": "${{ github.token }}"
+        "GITHUB_TOKEN": {
+          "kind": "async-pipeline.env.secret",
+          "name": "GITHUB_TOKEN"
+        }
       },
       "github": {
         "permissions": {
@@ -69,7 +72,10 @@
         "pr"
       ],
       "env": {
-        "GITHUB_TOKEN": "${{ github.token }}"
+        "GITHUB_TOKEN": {
+          "kind": "async-pipeline.env.secret",
+          "name": "GITHUB_TOKEN"
+        }
       },
       "github": {
         "permissions": {
@@ -91,7 +97,10 @@
         "release"
       ],
       "env": {
-        "GITHUB_TOKEN": "${{ github.token }}",
+        "GITHUB_TOKEN": {
+          "kind": "async-pipeline.env.secret",
+          "name": "GITHUB_TOKEN"
+        },
         "NODE_AUTH_TOKEN": {
           "kind": "async-pipeline.env.secret",
           "name": "NPM_TOKEN"

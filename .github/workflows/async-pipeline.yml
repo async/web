@@ -64,7 +64,7 @@ jobs:
         run: pnpm async-pipeline run main-snapshot
         env:
           CI: true
-          GITHUB_TOKEN: "${{ github.token }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   pages:
     name: pages
@@ -174,7 +174,7 @@ jobs:
         run: pnpm async-pipeline run pr-preview
         env:
           CI: true
-          GITHUB_TOKEN: "${{ github.token }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   stable-release:
     name: stable-release
@@ -222,7 +222,7 @@ jobs:
         run: pnpm async-pipeline run stable-release
         env:
           CI: true
-          GITHUB_TOKEN: "${{ github.token }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   verify:

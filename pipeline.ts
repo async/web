@@ -156,7 +156,7 @@ export default definePipeline({
       target: "github-pr-preview",
       trigger: ["pr"],
       env: {
-        GITHUB_TOKEN: "${{ github.token }}"
+        GITHUB_TOKEN: env.secret("GITHUB_TOKEN")
       },
       github: {
         permissions: {
@@ -171,7 +171,7 @@ export default definePipeline({
       target: "github-main-snapshot",
       trigger: ["main"],
       env: {
-        GITHUB_TOKEN: "${{ github.token }}"
+        GITHUB_TOKEN: env.secret("GITHUB_TOKEN")
       },
       github: {
         permissions: {
@@ -185,7 +185,7 @@ export default definePipeline({
       trigger: ["manual", "release"],
       environment: "npm-publish",
       env: {
-        GITHUB_TOKEN: "${{ github.token }}",
+        GITHUB_TOKEN: env.secret("GITHUB_TOKEN"),
         NODE_AUTH_TOKEN: env.secret("NPM_TOKEN")
       },
       requires: {
