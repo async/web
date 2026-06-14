@@ -23,7 +23,7 @@ export default definePipeline({
       tasks: [
         "api-ledger",
         "api-surface",
-        "pages-build",
+        "docs.site",
         "pack"
       ],
       scripts: {
@@ -111,9 +111,10 @@ export default definePipeline({
       cache: true,
       run: sh`pnpm api-contract ledger --manifest api-contract.json --check API_SURFACE.md`
     }),
-    "pages-build": task({
+    "docs.site": task({
+      description: "Build the standardized GitHub Pages documentation site.",
       inputs: ["README.md", "docs/**/*.md", "scripts/build-pages.js"],
-      outputs: ["_site/**"],
+      outputs: [".async/pages/**"],
       cache: false,
       run: sh`node scripts/build-pages.js`
     }),
@@ -155,7 +156,7 @@ export default definePipeline({
   },
   jobs: {
     verify: job({
-      target: ["pack", "api-surface", "pages-build"],
+      target: ["pack", "api-surface", "docs.site"],
       trigger: ["pr", "main"]
     }),
     "pr-preview": job({
@@ -219,8 +220,8 @@ export default definePipeline({
       }
     }),
     pages: job({
-      target: ["pack", "api-surface", "pages-build"],
-      trigger: ["main", "manual"],
+      target: ["docs.site"],
+      trigger: ["pr", "main", "manual"],
       github: {
         permissions: {
           contents: "read"
@@ -228,7 +229,7 @@ export default definePipeline({
         pages: {
           build: {
             kind: "static",
-            path: "_site"
+            path: ".async/pages"
           }
         }
       }

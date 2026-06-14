@@ -46,12 +46,12 @@
           "value": "async-pipeline run-task api-surface"
         },
         {
-          "name": "pipeline:task:pack",
-          "value": "async-pipeline run-task pack"
+          "name": "pipeline:task:docs.site",
+          "value": "async-pipeline run-task docs.site"
         },
         {
-          "name": "pipeline:task:pages-build",
-          "value": "async-pipeline run-task pages-build"
+          "name": "pipeline:task:pack",
+          "value": "async-pipeline run-task pack"
         },
         {
           "name": "pipeline:api-surface",
@@ -142,12 +142,12 @@
       "value": "async-pipeline run-task api-surface"
     },
     {
-      "name": "pipeline:task:pack",
-      "value": "async-pipeline run-task pack"
+      "name": "pipeline:task:docs.site",
+      "value": "async-pipeline run-task docs.site"
     },
     {
-      "name": "pipeline:task:pages-build",
-      "value": "async-pipeline run-task pages-build"
+      "name": "pipeline:task:pack",
+      "value": "async-pipeline run-task pack"
     },
     {
       "name": "pipeline:api-surface",
@@ -202,6 +202,6 @@
       "value": "async-pipeline run verify --force"
     }
   ],
-  "hash": "sha256:5898585e37721d8a8e57f8ae1869620960367fd9c23746855417f405cfeb2fc4",
-  "generatedAt": "2026-06-14T11:16:50.761Z"
+  "hash": "sha256:73e0bf1095953d461ebdf3276f8e8b32a46318ca0389d7686f5f0bc94c835639",
+  "generatedAt": "2026-06-14T19:47:18.757Z"
 }
