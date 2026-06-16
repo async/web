@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0](https://github.com/async/web/releases/tag/v0.2.0) - 2026-06-14
+## 0.2.0 - 2026-06-14
 
 ### Features
 
@@ -12,7 +12,7 @@
 - Standardize docs and package task examples on pnpm and `pnpm run <pipeline-name>`.
 - Replace the standalone release workflow with the generated `async-pipeline.yml`.
 
-## [0.1.1](https://github.com/async-framework/async-web/releases/tag/v0.1.1) - 2026-06-08
+## 0.1.1 - 2026-06-08
 
 ### Features
 
@@ -23,7 +23,7 @@
 
 - Added a Mini Cloudflare guide that maps the local provider shim to Async Webapps build, deployment, preview, and future Cloudflare adapter flows.
 
-## [0.1.0](https://github.com/async-framework/async-web/releases/tag/v0.1.0) - 2026-05-28
+## 0.1.0 - 2026-05-28
 
 Initial public release of Async Web as `@async/web`.
 

@@ -54,6 +54,7 @@ export default definePipeline({
       "docs/**/*.md",
       "scripts/**/*.js",
       "README.md",
+      "CHANGELOG.md",
       "API_SURFACE.md",
       "api-contract.json",
       "package.json",
@@ -142,7 +143,7 @@ export default definePipeline({
     }),
     "release-doctor": task({
       description: "Verify the published package, GitHub release, and registry state.",
-      inputs: ["packages/web/package.json"],
+      inputs: ["source"],
       cache: false,
       run: sh`pnpm async-pipeline release doctor --package ${publishPackage}`
     }),
