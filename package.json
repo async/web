@@ -14,8 +14,7 @@
     "pipeline:github:check": "async-pipeline github check",
     "pipeline:github:generate": "async-pipeline github generate",
     "pipeline:main-snapshot": "async-pipeline run main-snapshot",
-    "pipeline:pages": "async-pipeline run pages",
-    "pipeline:pr-preview": "async-pipeline run pr-preview",
+    "pipeline:pages": "async-pipeline run-task docs.site",
     "pipeline:publish:github:main": "async-pipeline publish github main --package packages/web",
     "pipeline:publish:github:pr": "async-pipeline publish github pr --package packages/web",
     "pipeline:publish:github:release": "async-pipeline publish github release --package packages/web",
@@ -41,6 +40,6 @@
   },
   "devDependencies": {
     "@async/api-contract": "0.1.0",
-    "@async/pipeline": "0.8.4"
+    "@async/pipeline": "0.8.8"
   }
 }

@@ -13,7 +13,12 @@ export default definePipeline({
   },
   sync: {
     github: {
-      nodeVersion: 24
+      nodeVersion: 24,
+      packagePreviews: {
+        package: publishPackage,
+        target: "pack"
+      },
+      pages: { target: "docs.site" }
     },
     tasks: {
       prefix: "pipeline",
@@ -33,6 +38,7 @@ export default definePipeline({
         "github:generate": "github generate",
         "api-surface": "run-task api-surface",
         "api:surface:generate": "run-task api-ledger",
+        "pages": "run-task docs.site",
         "publish:github:main": "publish github main --package packages/web",
         "publish:github:pr": "publish github pr --package packages/web",
         "publish:github:release": "publish github release --package packages/web",
@@ -119,12 +125,6 @@ export default definePipeline({
       cache: false,
       run: sh`node scripts/build-pages.js`
     }),
-    "github-pr-preview": task({
-      dependsOn: ["pack"],
-      inputs: ["source"],
-      cache: false,
-      run: sh`pnpm async-pipeline publish github pr --package ${publishPackage}`
-    }),
     "github-main-snapshot": task({
       dependsOn: ["pack"],
       inputs: ["source"],
@@ -159,21 +159,6 @@ export default definePipeline({
     verify: job({
       target: ["pack", "api-surface", "docs.site"],
       trigger: ["pr", "main"]
-    }),
-    "pr-preview": job({
-      target: "github-pr-preview",
-      trigger: ["pr"],
-      env: {
-        GITHUB_TOKEN: env.secret("GITHUB_TOKEN")
-      },
-      github: {
-        permissions: {
-          contents: "read",
-          issues: "write",
-          packages: "write",
-          pullRequests: "write"
-        }
-      }
     }),
     "main-snapshot": job({
       target: "github-main-snapshot",
@@ -220,20 +205,5 @@ export default definePipeline({
         }
       }
     }),
-    pages: job({
-      target: ["docs.site"],
-      trigger: ["pr", "main", "manual"],
-      github: {
-        permissions: {
-          contents: "read"
-        },
-        pages: {
-          build: {
-            kind: "static",
-            path: ".async/pages"
-          }
-        }
-      }
-    })
   }
 });

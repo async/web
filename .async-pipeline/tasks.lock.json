@@ -18,14 +18,6 @@
           "value": "async-pipeline run main-snapshot"
         },
         {
-          "name": "pipeline:pages",
-          "value": "async-pipeline run pages"
-        },
-        {
-          "name": "pipeline:pr-preview",
-          "value": "async-pipeline run pr-preview"
-        },
-        {
           "name": "pipeline:release-doctor",
           "value": "async-pipeline run release-doctor"
         },
@@ -68,6 +60,10 @@
         {
           "name": "pipeline:github:generate",
           "value": "async-pipeline github generate"
+        },
+        {
+          "name": "pipeline:pages",
+          "value": "async-pipeline run-task docs.site"
         },
         {
           "name": "pipeline:publish:github:main",
@@ -114,14 +110,6 @@
       "value": "async-pipeline run main-snapshot"
     },
     {
-      "name": "pipeline:pages",
-      "value": "async-pipeline run pages"
-    },
-    {
-      "name": "pipeline:pr-preview",
-      "value": "async-pipeline run pr-preview"
-    },
-    {
       "name": "pipeline:release-doctor",
       "value": "async-pipeline run release-doctor"
     },
@@ -166,6 +154,10 @@
       "value": "async-pipeline github generate"
     },
     {
+      "name": "pipeline:pages",
+      "value": "async-pipeline run-task docs.site"
+    },
+    {
       "name": "pipeline:publish:github:main",
       "value": "async-pipeline publish github main --package packages/web"
     },
@@ -202,6 +194,6 @@
       "value": "async-pipeline run verify --force"
     }
   ],
-  "hash": "sha256:73e0bf1095953d461ebdf3276f8e8b32a46318ca0389d7686f5f0bc94c835639",
-  "generatedAt": "2026-06-16T21:11:17.527Z"
+  "hash": "sha256:cdbb88193b59f17feb85681f38201d0f3d91e647ea8e49de9fbe3c0e74ff58fa",
+  "generatedAt": "2026-06-18T04:13:44.933Z"
 }
